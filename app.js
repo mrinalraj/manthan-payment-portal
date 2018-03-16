@@ -26,8 +26,8 @@ app.set('view engine','handlebars')
 
 app.use(flash())
 
-const login = require('./routes/login')
-app.use('/', login)
+app.use('/', require('./routes/login'))
+app.use('/profile',require('./routes/profile'))
 
 
 app.listen(PORT,(err)=>{
