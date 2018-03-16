@@ -21,6 +21,8 @@ app.use(cookieSession({
 app.use(passport.initialize())
 app.use(passport.session())
 
+app.use(express.static('public'))
+
 app.engine('handlebars', exphbs({defaultLayout : 'layout'}))
 app.set('view engine','handlebars')
 

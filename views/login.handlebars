@@ -1,7 +1,47 @@
+<div class="limiter">
+	<div class="container-login100">
+		<div class="wrap-login100">
+			<div class="login100-pic js-tilt" data-tilt>
+				<img height="200dp" src="logo/logo-dark.png" alt="IMG">
+			</div>
 
-<div class="container">
-    <h2>Login to continue</h2>
-    <button class="loginBtn loginBtn--google">
-        Login with Google
-    </button>
+			<div class="login100-form validate-form">
+				<span class="login100-form-title">
+					Login to continue
+				</span>
+
+				<div onclick="onclickfn();" class="google-button">
+					<img width="25	" src="http://diylogodesigns.com/blog/wp-content/uploads/2016/04/google-logo-icon-PNG-Transparent-Background-768x768.png">
+					<span class="text">Login with Google</span>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
+
+<script>
+	let onclickfn = () =>{
+		window.location.href = window.location.href+"login"
+	}
+</script>
+
+<style>
+	.google-button {
+		background: white;
+		border-radius: 4px;
+		padding: 10px 25px;
+		box-shadow: 0px 0px 10px rgba(26, 26, 26, 0.3);
+	}
+	.google-button:hover{
+		box-shadow: 0px 0px 25px rgba(26, 26, 26, 0.3);
+		cursor: pointer;
+	}
+	.google-button img{
+		margin-left: 20px;
+	} 
+	.google-button .text {
+		margin-left: 20px;
+		line-height: 30px;
+		font-size: 16;
+	}
+</style>
