@@ -3,15 +3,15 @@ const passport = require('passport'),
     GoogleStrategy = require('passport-google-oauth20'),
     User = require('./models/user-model')
 
-passport.serializeUser((user, done) => {
-    done(null,user.id)
-})
+// passport.serializeUser((user, done) => {
+//     done(null,user.id)
+// })
 
-passport.deserializeUser((id,done)=>{
-    User.findById(id).then((user)=>{
-        done(err,user)
-    })
-})
+// passport.deserializeUser((id,done)=>{
+//     User.findById(id).then((user)=>{
+//         done(err,user)
+//     })
+// })
 
 passport.use(
     new GoogleStrategy({

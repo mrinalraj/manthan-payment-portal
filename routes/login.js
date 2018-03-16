@@ -10,11 +10,11 @@ const express = require('express'),
 router.get('/', passport.authenticate('google', { scope: ['profile'] }))
 
 router.get('/auth/success', passport.authenticate('google'), (r, s) => {
-    s.send(r.user)
+    s.send('logged in')
 })
 
 router.get('/profile', (r, s) => {
-    s.send('hello '+r.user.username)
+    s.send('hello ')
 })
 
 module.exports = router
