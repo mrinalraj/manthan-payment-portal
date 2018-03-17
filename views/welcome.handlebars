@@ -1,0 +1,124 @@
+<div class="welcome">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="/logo/logo-dark.png" width="30" class="d-inline-block align-top" alt=""> &nbsp;&nbsp;Manthan 18
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                    {{!--
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Pricing</a>
+                    </li> --}}
+                </ul>
+                <span class="navbar-text">
+                    <span>
+                        <a href="/profile">
+                            <img src="{{img}}" width="30" style="border-radius:100%;">
+                        </a>
+                        <a href="/logout" style="margin-left:20px;">Logout</a>
+                    </span>
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="body">
+        <div class="container">
+            <h2>Welcome aboard! {{name}}</h2>
+            <p>Lets start by filling your basic info</p>
+
+            <form method="post">
+                <div class="form-group">
+                    <label for="inputState">College</label>
+                    <select name="college" id="inputState" class="form-control" required>
+                        <option value="College of engineering roorkee" selected>College of Engineering Roorkee</option>
+                        <option value="others">Others</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="form-control" id="other" name="othername" disabled>
+                    <small class="form-text text-muted">enter your college name if other</small>
+                </div>
+                <div class="form-group">
+                    <label for="city">City</label>
+                    <input type="text" name="city" class="form-control" id="city" placeholder="City your college is in" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="branch">Branch</label>
+                        <input type="text" name="branch" class="form-control" id="branch" required>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="year">Year</label>
+                        <input type="number" name="year" class="form-control" id="year" required>
+                        <small class="form-text text-muted">the current year of study</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="mobile">Mobile Number</label>
+                    <div class="input-group mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">+91</div>
+                        </div>
+                        <input type="number" name="mobile" class="form-control" id="mobile" required>
+                    </div>
+                    <small class="form-text text-muted">Don't worry we wont spam you !</small>
+                </div>
+                <br>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="accomodation" id="accomodation">
+                    <label class="form-check-label" for="accomodation">
+                        Accomodation required ?
+                    </label>
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="events">Events you want to participate in</label>
+                    <select multiple name="events" class="form-control" id="enevts" size="11" style="padding:15px" required>
+                        <option>Gigabit</option>
+                        <option>Codex</option>
+                        <option>Kurukshetra</option>
+                        <option>Robosync</option>
+                        <option>Kouiz</option>
+                        <option>Strategem</option>
+                        <option>Blitzkreig</option>
+                        <option>Shaurya</option>
+                        <option>Electromania</option>
+                        <option>Bridgeit</option>
+                        <option>Prayog</option>
+                    </select>
+                    <small class="form-text text-muted">ctrl select multiple events</small>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-success">Submit</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+<script>
+    $('#inputState').change(() => {
+        if ($("#inputState").val() == "others") {
+            $("#other").removeAttr("disabled")
+        }
+        else {
+            $("#other").attr('disabled', 'disabled').val('')
+        }
+    }).trigger('change')
+</script>

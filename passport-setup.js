@@ -30,7 +30,8 @@ passport.use(
                 new User({
                     username: profile.displayName,
                     googleID: profile.id,
-                    profileImage: image
+                    profileImage: image,
+                    basicInfo : false
                 }).save().then((newUser) => {
                     done(null, newUser)
                 })

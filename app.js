@@ -8,15 +8,25 @@ const express = require('express'),
     cookieSession = require('cookie-session'),
     flash = require('connect-flash'),
     passport = require('passport'),
-    mongoose = require('mongoose')
+    mongoose = require('mongoose'),
+    bodyParser = require('body-parser'),
+    InstaMojo = require('instamojo-nodejs')
 
 
 mongoose.connect(process.env.MongoDBURI, () => console.log('db connected'))
+
+InstaMojo.setKeys(process.env.InstaMojoAPIKeyTest,process.env.InstaMojoAuthKeyTest)
+InstaMojo.isSandboxMode(true)
 
 app.use(cookieSession({
     maxAge: 2 * 24 * 60 * 60 * 1000,
     keys : [ process.env.SECRET_KEY ] 
 }))
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 
 app.use(passport.initialize())
 app.use(passport.session())

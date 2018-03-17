@@ -1,0 +1,63 @@
+.home-root{
+    background: #9053c7;
+    background: -webkit-linear-gradient(-135deg, #c850c0, #4158d0);
+    background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
+    background: -moz-linear-gradient(-135deg, #c850c0, #4158d0);
+    background: linear-gradient(-135deg, #c850c0, #4158d0);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.middle-container{
+    margin: 30px;   
+    background: white;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column; 
+    padding: 40px;
+    justify-content: center;
+    align-items: center;
+}
+
+h4{
+    margin: 50px 0;
+}
+
+.fa {
+    padding: 20px;
+    font-size: 30px;
+    width: 30px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 50%;
+}
+
+button.google-login{
+    outline:none;
+    background: white;
+    border: none;
+    border-radius: 4px;
+    margin-top: 80px;
+    box-shadow: 0 0 15px #bdbdbdde;
+    padding: 15px 30px;
+    cursor: pointer;
+}
+
+button.google-login:hover{
+    box-shadow: 0 0 25px #bdbdbd;
+}
+
+.welcome{
+    
+}
+
+.welcome .body{
+    font-family: 'Ubuntu';
+    margin-top: 60px;
+}
+
+.welcome .body form{
+    margin: 50px 0;
+}
