@@ -19,7 +19,7 @@ const router = require('express').Router(),
     InstaMojo = require('instamojo-nodejs')
 
 router.get('/', AuthCheck, CheckFirstTime, (r, s) => {
-    s.send(r.user.username+r.user.college)
+    s.send(r.user.username + r.user.college)
 })
 
 router.get('/welcome', AuthCheck, (r, s) => {
@@ -32,7 +32,7 @@ router.get('/welcome', AuthCheck, (r, s) => {
 router.post('/welcome', AuthCheck, (r, s) => {
     if (!r.body) return s.send('invalid request')
     let newData = {
-        basicInfo : true,
+        basicInfo: true,
         college: r.body.othername ? r.body.othername : r.body.college,
         city: r.body.city,
         branch: r.body.branch,
@@ -41,35 +41,41 @@ router.post('/welcome', AuthCheck, (r, s) => {
         accomodation: (r.body.accomodation) ? true : false,
         events: r.body.events
     }
-    
-    User.findOneAndUpdate({'username':r.user.username},newData,(err,doc)=>{
-        if(err) return s.send('error occured')
-        s.redirect('/profile')
+
+    User.findOneAndUpdate({ 'username': r.user.username }, newData, (err, doc) => {
+        if (err) return s.send('error occured')
+        s.redirect('/profile/payment')
     })
 })
 
-router.get('/pay-now',AuthCheck,(r,s)=>{
+router.get('/pay-now', AuthCheck, (r, s) => {
     let data = new InstaMojo.PaymentData()
     data.purpose = "Manthan 18 Ticket"
     data.currency = "INR"
     data.buyer_name = r.user.username
-    data.phone  = r.user.mobile
+    data.phone = r.user.mobile
     data.allow_repeated_payment = 'False'
     data.amount = 108
-    data.webhook ='http://'+r.get('host')+'/payment/success'
-    // data.redirect_url = 'http://'+r.get('host')+'/profile'
+    //data.webhook = 'http://' + r.get('host') + '/payment/success'
+    data.redirect_url = 'http://'+r.get('host')+'/profile/payment/success'
 
-    InstaMojo.createPayment(data ,(err,res)=>{
-        if(err) return s.send(err)
+    InstaMojo.createPayment(data, (err, res) => {
+        if (err) return s.send(err)
         let response = JSON.parse(res)
-        console.log(r.get('host'))
-        console.log(res)
         s.redirect(response.payment_request.longurl)
     })
 })
 
-router.post('/payment/success',AuthCheck,(r,s)=>{
-    s.send(r.body)
+router.get('/payment', (r, s) => {
+    s.render('payment',{name:r.user.username})
+})
+
+router.get('/payment/success', AuthCheck, (r, s) => {
+    let paymentId = r.query['payment_id'],
+        paymentReq = r.query['payment_request_id']
+        
+
+    s.send('payment successful '+'payment id: '+paymentId+' payment req id: '+paymentReq)
 })
 
 module.exports = router

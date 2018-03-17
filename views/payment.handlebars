@@ -1,7 +1,29 @@
 <div class="payment">
-    <div class="payment-box">
+    <div class="well payment-box">
         <h3>{{name}}</h3>
-        <h5>Pay Now !</h5>
-        <button class="btn btn-success">Paynow</button>
+        <button onclick="paynow()" class="btn btn-success">Pay Now</button>
+        <button onclick="paylater()" class="btn btn-success">Pay Later</button>
     </div>
 </div>
+
+<style>
+    .payment {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin: 80px;
+    }
+    .payment h3{
+        margin: 40px;
+    }
+</style>
+
+<script>
+    let paynow = () => {
+        window.location.href =  '/profile/pay-now'
+    },
+        paylater = () => {
+            window.location.href = '/profile'
+        }
+</script>
