@@ -57,7 +57,7 @@ router.get('/pay-now',AuthCheck,(r,s)=>{
     data.allow_repeated_payment = 'False'
     data.amount = 108
     data.webhook ='http://'+r.get('host')+'/payment/success'
-    data.redirect_url = 'http://'+r.get('host')+'/profile'
+    // data.redirect_url = 'http://'+r.get('host')+'/profile'
 
     InstaMojo.createPayment(data ,(err,res)=>{
         if(err) return s.send(err)
