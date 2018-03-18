@@ -14,7 +14,8 @@ let UserSchema = new Schema({
     accomodation : Boolean,
     events : [String],
     payment : Boolean,
-    paymentToken : String
+    paymentId : String,
+    paymentReq : String
 })
 
 const user = module.exports = mongoose.model('user', UserSchema)

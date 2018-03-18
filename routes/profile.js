@@ -10,8 +10,7 @@ const router = require('express').Router(),
     CheckFirstTime = (r, s, n) => {
         if (r.user.basicInfo == true) {
             n()
-        }
-        else {
+        } else {
             s.redirect('/profile/welcome')
         }
     },
@@ -42,7 +41,9 @@ router.post('/welcome', AuthCheck, (r, s) => {
         events: r.body.events
     }
 
-    User.findOneAndUpdate({ 'username': r.user.username }, newData, (err, doc) => {
+    User.findOneAndUpdate({
+        'username': r.user.username
+    }, newData, (err, doc) => {
         if (err) return s.send('error occured')
         s.redirect('/profile/payment')
     })
@@ -55,27 +56,54 @@ router.get('/pay-now', AuthCheck, (r, s) => {
     data.buyer_name = r.user.username
     data.phone = r.user.mobile
     data.allow_repeated_payment = 'False'
-    data.amount = 108
+    let amount = ((r.user.college === "College of engineering roorkee") ? 100 : ((r.user.accomodation) ? 500 : 400)) + 3
+    data.amount = Math.ceil(amount + (0.02 * amount)) + 0.5
+
     //data.webhook = 'http://' + r.get('host') + '/payment/success'
-    data.redirect_url = 'http://'+r.get('host')+'/profile/payment/success'
+    data.redirect_url = 'http://' + r.get('host') + '/profile/payment/success'
 
     InstaMojo.createPayment(data, (err, res) => {
         if (err) return s.send(err)
         let response = JSON.parse(res)
         s.redirect(response.payment_request.longurl)
     })
+
 })
 
 router.get('/payment', (r, s) => {
-    s.render('payment',{name:r.user.username})
+    let amount = ((r.user.college === "College of engineering roorkee") ? 100 : ((r.user.accomodation) ? 500 : 400)) + 3,
+        finalAmount = Math.ceil(amount + (0.02 * amount)) + 0.5
+    s.render('payment', {
+        user: r.user,
+        amount: amount - 3,
+        handeling: finalAmount - amount,
+        total: finalAmount
+    })
 })
 
 router.get('/payment/success', AuthCheck, (r, s) => {
-    let paymentId = r.query['payment_id'],
-        paymentReq = r.query['payment_request_id']
-        
 
-    s.send('payment successful '+'payment id: '+paymentId+' payment req id: '+paymentReq)
+    if (Object.keys(r.query).length && r.query['payment_id']) {
+        let newData = {
+            payment : true,
+            paymentId : r.query['payment_id'],
+            paymentReq : r.query['payment_request_id']
+        }
+
+        User.findOneAndUpdate({
+            username: r.user.username
+        }, newData,(err,doc)=>{
+            if(err) return  s.send('<h1>Error completing payment,<br>please contact +917619734988</h1>')
+            s.render('payment-success', {
+                paymentId: newData.paymentId,
+                paymentReq: newData.paymentReq
+            })
+        })
+
+    } else s.send(
+        '<title>Bad request </title>' +
+        '<h1>403<br>invalid request</h1>'
+    )
 })
 
 module.exports = router

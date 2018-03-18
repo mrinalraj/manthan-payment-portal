@@ -1,6 +1,13 @@
 <div class="payment">
     <div class="well payment-box">
-        <h3>{{name}}</h3>
+        <h2>Checkout</h2>
+        <h5>Order details</h5>
+        <hr>
+        <p>Name : {{user.username}}</p>
+        <p>Mobile : {{user.mobile}}</p>
+        <p>Subtotal : {{amount}}</p>
+        <p>Handeling charges : {{handeling}}</p>
+        <p>Total : {{total}}</p>
         <button onclick="paynow()" class="btn btn-success">Pay Now</button>
         <button onclick="paylater()" class="btn btn-success">Pay Later</button>
     </div>
@@ -11,11 +18,17 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        text-align: center;
-        margin: 80px;
+        font-family: 'Ubuntu' 
     }
-    .payment h3{
-        margin: 40px;
+    .payment h2{
+        margin-bottom: 60px;
+    }
+    .payment-box {
+        margin: 20vh;
+        background: white;
+        border-radius: 4px;
+        padding: 30px 80px;
+        box-shadow: 0 0 8px #5f5e5e52;
     }
 </style>
 
