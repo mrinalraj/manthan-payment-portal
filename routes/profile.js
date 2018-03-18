@@ -20,7 +20,7 @@ const router = require('express').Router(),
         }else{
             n()
         }
-    }
+    },
     User = require('../models/user-model'),
     InstaMojo = require('instamojo-nodejs'),
     Qr = require('qr-image'),
