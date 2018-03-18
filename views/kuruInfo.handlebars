@@ -1,0 +1,73 @@
+<div class="kuruInfo">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="/logo/logo-dark.png" width="30" class="d-inline-block align-top" alt=""> &nbsp;&nbsp;Manthan 18
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText"
+                aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto">
+                </ul>
+                <span class="navbar-text">
+                    <span>
+                        <a href="/profile">
+                            <img src="{{user.profileImage}}" width="30" style="border-radius:100%;">
+                        </a>
+                        <a href="/logout" style="margin-left:20px;">Logout</a>
+                    </span>
+                </span>
+            </div>
+        </div>
+    </nav>
+    <div class="body">
+        <div class="container">
+            <h2>Kurukshetra 2018</h2>
+            <p>tell us about your team.</p>
+            <p>Onle the team leader should fill this form if you are not the team leader you can <a href="/profile/payment">skip</a> this</p>
+            <p>or if the other members are not registered yet. you can fill this later from your profile screen</p>
+
+            <form method="post">
+                <div class="form-group">
+                    <label for="teamName">Team Name</label>
+                    <input type="text" class="form-control" id="teamName" name="teamname">
+                    <small class="form-text text-muted">Alone we can do so little, together we can do so much.</small>
+                </div>
+                <div class="form-group">
+                    <label for="inputGame">Game</label>
+                    <select name="game" id="inputGame" class="form-control"  >
+                        <option value="CSGO" selected>Counter Strike : Global Offensive</option>
+                        <option value="DOTA2">Dota 2</option>
+                    </select>
+                    <small class="form-text text-muted">Whichever is you professional skill</small>
+                </div>
+                {{#each number}}
+                <label>Member {{this}}</label>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <input type="text" name="memname" class="form-control" placeholder="Name"  >
+                        <small class="form-text text-muted">Name you use in-game.</small>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input type="text" name="steamid" class="form-control" placeholder="Steam ID">
+                        <small class="form-text text-muted">You obviously have one</small>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input type="text" name="manthanid" class="form-control" placeholder="Manthan ID">
+                    </div>
+                </div>
+                {{/each}}
+                <br>
+                <button type="submit" class="btn btn-info">Submit</button>
+                
+            </form>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>

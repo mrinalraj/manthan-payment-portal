@@ -1,4 +1,4 @@
-.home-root{
+.home-root {
     background: #9053c7;
     background: -webkit-linear-gradient(-135deg, #c850c0, #4158d0);
     background: -o-linear-gradient(-135deg, #c850c0, #4158d0);
@@ -10,18 +10,19 @@
     justify-content: center;
     align-items: center;
 }
-.middle-container{
-    margin: 30px;   
+
+.middle-container {
+    margin: 30px;
     background: white;
     border-radius: 5px;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     padding: 40px;
     justify-content: center;
     align-items: center;
 }
 
-h4{
+.home-root h4 {
     margin: 50px 0;
 }
 
@@ -34,8 +35,8 @@ h4{
     border-radius: 50%;
 }
 
-button.google-login{
-    outline:none;
+button.google-login {
+    outline: none;
     background: white;
     border: none;
     border-radius: 4px;
@@ -45,19 +46,112 @@ button.google-login{
     cursor: pointer;
 }
 
-button.google-login:hover{
+button.google-login:hover {
     box-shadow: 0 0 25px #bdbdbd;
 }
 
-.welcome{
-    
-}
+.welcome {}
 
-.welcome .body{
+.body {
     font-family: 'Ubuntu';
     margin-top: 60px;
 }
 
-.welcome .body form{
+.body form {
     margin: 50px 0;
 }
+
+.profile .banner {
+    width: 100%;
+    min-height: 10vh;
+    background-size: cover;
+    background: rgb(81, 107, 139);
+    background-position: center center;
+    box-shadow: inset 0 0 15px rgba(54, 54, 54, 0.5);
+}
+
+.profile-info {
+    padding: 30px;
+    font-family: 'Ubuntu';
+    color: white;
+}
+
+.profile-info h3 {
+    margin-top: 30px;
+}
+
+.profile-info p {
+    margin: 2px 0;
+}
+
+.profile-info img {
+    height: 170px;
+    border-radius: 100%;
+    box-shadow: 0 0 15px rgba(53, 53, 53, 0.856)
+}
+
+.profile-info .profile-row {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.profile-info .profile-row .avatar {
+    margin: 0 40px 0 0;
+}
+
+.ticket {
+    margin:50px 0 80px 0;
+    box-shadow: 0 1px 7px rgba(107, 107, 107, 0.4);
+}
+
+.ticket .pattern {
+    background: url('../ticket-pattern.jpg');
+    height: 250px;
+    
+}
+
+.ticket .pattern .overlay {
+    position: absolute;
+    width: calc(100% - 30px);
+    height: 250px;
+    margin: 0;
+    padding: 0;
+    z-index: 11;
+    background: rgba(88, 96, 122, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.ticket .details {
+    padding: 40px 30px;
+    font-family: 'VT323'
+}
+
+.ticket .details h5{
+    font-size:  1.3rem;
+}
+
+.ticket .details h5.events{
+    margin-left: 20px !important;
+}
+
+hr{
+    margin: 0;
+}
+
+.ticket .validity {
+    padding: 30px 30px;
+}
+
+.signature{
+    font-family: 'Homemade Apple';
+    text-align: right;
+}
+
+.signature h5{
+    line-height: 100px;
+    transform: rotate(-15deg);
+}
+
+

@@ -14,11 +14,26 @@ const router = require('express').Router(),
             s.redirect('/profile/welcome')
         }
     },
+    CheckPayment = (r,s,n) =>{
+        if(r.user.payment){
+            s.redirect('/profile')
+        }else{
+            n()
+        }
+    }
     User = require('../models/user-model'),
-    InstaMojo = require('instamojo-nodejs')
+    InstaMojo = require('instamojo-nodejs'),
+    Qr = require('qr-image'),
+    imgUri = require('image-data-uri')
 
 router.get('/', AuthCheck, CheckFirstTime, (r, s) => {
-    s.send(r.user.username + r.user.college)
+
+    s.render('profile', {
+        user: r.user,
+        payment: r.user.payment ? 'Successful' : 'Pending',
+        qr: r.user.qr,
+        accomodation : r.user.accomodation ? "Yes" : "No"
+    })
 })
 
 router.get('/welcome', AuthCheck, (r, s) => {
@@ -45,15 +60,49 @@ router.post('/welcome', AuthCheck, (r, s) => {
         'username': r.user.username
     }, newData, (err, doc) => {
         if (err) return s.send('error occured')
-        s.redirect('/profile/payment')
+        let events = newData.events
+        if (events.includes("Kurukshetra", 0)) return s.redirect('/profile/kuru-info')
+        else return s.redirect('/profile/payment')
     })
 })
 
-router.get('/pay-now', AuthCheck, (r, s) => {
+router.get('/kuru-info', AuthCheck, CheckFirstTime, (r, s) => {
+    s.render('kuruInfo', {
+        user: r.user,
+        number: [1, 2, 3, 4, 5]
+    })
+})
+
+router.post('/kuru-info', AuthCheck, CheckFirstTime, (r, s) => {
+    if (r.body) {
+        let newData = {
+            kuruInfo: {
+                teamLeader: r.user.username,
+                teamName: r.body.teamname,
+                game: r.body.gamename,
+                members: r.body.memname,
+                steamIds: r.body.steamid,
+                manthanIds: r.body.manthanid
+            }
+        }
+        User.findOneAndUpdate({
+            username: r.user.username
+        }, newData, (err, doc) => {
+            if (err) return s.send('error occured')
+            s.redirect('/profile/payment')
+        })
+    } else {
+        s.redirect('/profile/payment')
+    }
+
+})
+
+router.get('/pay-now', AuthCheck, CheckPayment , (r, s) => {
     let data = new InstaMojo.PaymentData()
     data.purpose = "Manthan 18 Ticket"
     data.currency = "INR"
     data.buyer_name = r.user.username
+    data.email = r.user.email
     data.phone = r.user.mobile
     data.allow_repeated_payment = 'False'
     let amount = ((r.user.college === "College of engineering roorkee") ? 100 : ((r.user.accomodation) ? 500 : 400)) + 3
@@ -70,13 +119,13 @@ router.get('/pay-now', AuthCheck, (r, s) => {
 
 })
 
-router.get('/payment', (r, s) => {
+router.get('/payment', AuthCheck ,CheckPayment , (r, s) => {
     let amount = ((r.user.college === "College of engineering roorkee") ? 100 : ((r.user.accomodation) ? 500 : 400)) + 3,
-        finalAmount = Math.ceil(amount + (0.02 * amount)) + 0.5
+        finalAmount = (amount + (0.02 * amount)) + 0.5
     s.render('payment', {
         user: r.user,
-        amount: amount - 3,
-        handeling: finalAmount - amount,
+        amount: amount,
+        handeling: (finalAmount - amount).toFixed(2),
         total: finalAmount
     })
 })
@@ -85,15 +134,16 @@ router.get('/payment/success', AuthCheck, (r, s) => {
 
     if (Object.keys(r.query).length && r.query['payment_id']) {
         let newData = {
-            payment : true,
-            paymentId : r.query['payment_id'],
-            paymentReq : r.query['payment_request_id']
+            payment: true,
+            paymentId: r.query['payment_id'],
+            paymentReq: r.query['payment_request_id'],
+            qr: imgUri.encode(Qr.imageSync(r.user.id, 'PNG'), 'PNG')
         }
 
         User.findOneAndUpdate({
             username: r.user.username
-        }, newData,(err,doc)=>{
-            if(err) return  s.send('<h1>Error completing payment,<br>please contact +917619734988</h1>')
+        }, newData, (err, doc) => {
+            if (err) return s.send('<h1>Error completing payment,<br>please contact +917619734988</h1>')
             s.render('payment-success', {
                 paymentId: newData.paymentId,
                 paymentReq: newData.paymentReq
@@ -105,5 +155,6 @@ router.get('/payment/success', AuthCheck, (r, s) => {
         '<h1>403<br>invalid request</h1>'
     )
 })
+
 
 module.exports = router

@@ -10,7 +10,7 @@ router.get('/',(r,s)=>{
     s.render('login')
 })
 
-router.get('/login', checkAuth, passport.authenticate('google', { scope: ['profile'] }))
+router.get('/login', checkAuth, passport.authenticate('google', { scope: ['profile','email'] }))
 
 router.get('/auth/success', passport.authenticate('google'), (r, s) => {
     s.redirect('/profile')

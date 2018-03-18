@@ -20,22 +20,28 @@ passport.use(
         callbackURL: "/auth/success"
     }, (accessToken, refreshToken, profile, done) => {
 
-        User.findOne({ googleID: profile.id }).then((currentUser) => {
+        User.findOne({
+            googleID: profile.id
+        }).then((currentUser) => {
             if (currentUser) {
                 done(null, currentUser)
-            }
-            else {
+            } else {
                 let photos = profile.photos[0],
-                    image = photos.value
+                    image = photos.value,
+                    mail = profile.emails[0],
+                    email = mail.value
                 new User({
                     username: profile.displayName,
                     googleID: profile.id,
-                    profileImage: image,
-                    basicInfo : false
+                    profileImage: image.replace('sz=50','sz=200'),
+                    basicInfo: false,
+                    email: email
                 }).save().then((newUser) => {
                     done(null, newUser)
                 })
             }
         })
+
+
     })
 )

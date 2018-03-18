@@ -11,11 +11,21 @@ let UserSchema = new Schema({
     branch : String,
     year : String,
     mobile : String,
+    email : String,
     accomodation : Boolean,
     events : [String],
     payment : Boolean,
     paymentId : String,
-    paymentReq : String
+    paymentReq : String,
+    kuruInfo : {
+        teamLeader : String,
+        teamName : String,
+        game : String,
+        members : [String],
+        steamIds : [String],
+        manthanIds : [String]
+    },
+    qr : String
 })
 
 const user = module.exports = mongoose.model('user', UserSchema)
