@@ -114,6 +114,7 @@ router.get('/pay-now', AuthCheck, CheckPayment , (r, s) => {
     InstaMojo.createPayment(data, (err, res) => {
         if (err) return s.send(err)
         let response = JSON.parse(res)
+        console.log(response)
         s.redirect(response.payment_request.longurl)
     })
 
