@@ -69,7 +69,7 @@ router.post('/welcome', AuthCheck, (r, s) => {
 router.get('/kuru-info', AuthCheck, CheckFirstTime, (r, s) => {
     s.render('kuruInfo', {
         user: r.user,
-        number: [1, 2, 3, 4, 5]
+        number: [2, 3, 4, 5]
     })
 })
 
@@ -81,8 +81,7 @@ router.post('/kuru-info', AuthCheck, CheckFirstTime, (r, s) => {
                 teamName: r.body.teamname,
                 game: r.body.gamename,
                 members: r.body.memname,
-                steamIds: r.body.steamid,
-                manthanIds: r.body.manthanid
+                mobile : r.body.mob
             }
         }
         User.findOneAndUpdate({

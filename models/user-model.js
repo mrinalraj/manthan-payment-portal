@@ -22,8 +22,7 @@ let UserSchema = new Schema({
         teamName : String,
         game : String,
         members : [String],
-        steamIds : [String],
-        manthanIds : [String]
+        mobile : [String]
     },
     qr : String
 })

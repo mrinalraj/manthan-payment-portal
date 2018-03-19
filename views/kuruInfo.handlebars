@@ -32,30 +32,37 @@
             <form method="post">
                 <div class="form-group">
                     <label for="teamName">Team Name</label>
-                    <input type="text" class="form-control" id="teamName" name="teamname">
+                    <input type="text" class="form-control" id="teamName" name="teamname" required>
                     <small class="form-text text-muted">Alone we can do so little, together we can do so much.</small>
                 </div>
                 <div class="form-group">
                     <label for="inputGame">Game</label>
-                    <select name="game" id="inputGame" class="form-control"  >
+                    <select name="game" id="inputGame" class="form-control"  required>
                         <option value="CSGO" selected>Counter Strike : Global Offensive</option>
                         <option value="DOTA2">Dota 2</option>
                     </select>
                     <small class="form-text text-muted">Whichever is you professional skill</small>
                 </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <input type="text" name="memname" class="form-control" placeholder="Name" value="{{user.username}}" required>
+                        <small class="form-text text-muted">Name you use in-game.</small>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <input type="text" name="mob" class="form-control" placeholder="Mobile number" value="{{user.mobile}}" required>
+                        <small class="form-text text-muted">You obviously have one</small>
+                    </div>
+                </div>
                 {{#each number}}
                 <label>Member {{this}}</label>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <input type="text" name="memname" class="form-control" placeholder="Name"  >
+                        <input type="text" name="memname" class="form-control" placeholder="Name"  required>
                         <small class="form-text text-muted">Name you use in-game.</small>
                     </div>
                     <div class="form-group col-md-6">
-                        <input type="text" name="steamid" class="form-control" placeholder="Steam ID">
+                        <input type="text" name="mob" class="form-control" placeholder="Mobile number" required>
                         <small class="form-text text-muted">You obviously have one</small>
-                    </div>
-                    <div class="form-group col-md-6">
-                        <input type="text" name="manthanid" class="form-control" placeholder="Manthan ID">
                     </div>
                 </div>
                 {{/each}}
