@@ -162,10 +162,4 @@ router.get('/payment/success', AuthCheck, (r, s) => {
     )
 })
 
-router.get('/mail', (r, s) => {
-    require('../mailer').sendMail(r.user, err => {
-        if (err) return console.log(err)
-        s.send('mail sent')
-    })
-})
 module.exports = router

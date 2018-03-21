@@ -23,6 +23,8 @@
     "mongoose": "^5.0.10",
     "nodemailer": "^4.6.3",
     "nodemailer-express-handlebars": "^3.0.0",
+    "nodemailer-plugin-inline-base64": "^2.1.1",
+    "nodemailer2": "^2.7.1",
     "passport": "^0.4.0",
     "passport-google-oauth20": "^1.0.0",
     "qr-image": "^3.2.0"

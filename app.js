@@ -15,8 +15,8 @@ const express = require('express'),
 
 mongoose.connect(process.env.MongoDBURI, () => console.log('db connected'))
 
-InstaMojo.setKeys(process.env.InstaMojoAPIKeyTest,process.env.InstaMojoAuthKeyTest)
-InstaMojo.isSandboxMode(true)
+InstaMojo.setKeys(process.env.InstaMojoAPIKey,process.env.InstaMojoAuthKey)
+InstaMojo.isSandboxMode(false)
 
 app.use(cookieSession({
     maxAge: 2 * 24 * 60 * 60 * 1000,

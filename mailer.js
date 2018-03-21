@@ -1,5 +1,6 @@
-const nodemailer = require('nodemailer'),
-    hbs = require('nodemailer-express-handlebars')
+const nodemailer = require('nodemailer2'),
+    hbs = require('nodemailer-express-handlebars'),
+    inlineBase64 = require('nodemailer-plugin-inline-base64')
 
 module.exports.sendMail = (user , callback) => {
     let auth = {
@@ -8,16 +9,11 @@ module.exports.sendMail = (user , callback) => {
     }
     console.log(auth)
     let transporter = nodemailer.createTransport({
-        host  : 'stmp.google.com',
-        port : 465,
-        secure : true,
-        auth : {
-            user : process.env.UserEmail,
-            pass : process.env.UserPassword
-        }
+        service : 'gmail',
+        auth : auth
     })
     let mailOptions = {
-        from : '"Manthan 2018" ',
+        from : '"Manthan 2018" ' + auth.user,
         to : user.email,
         subject : 'Manthan 2018 ticket',
         template: 'ticketmail',
@@ -34,6 +30,7 @@ module.exports.sendMail = (user , callback) => {
         , viewPath : './views/mails'
     }
     transporter.use('compile',hbs(options))
+    transporter.use('compile',inlineBase64())
     transporter
         .sendMail(mailOptions,(err,info)=>{
             if (err) return console.log(err)
