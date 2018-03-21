@@ -63,8 +63,9 @@ router.post('/welcome', AuthCheck, (r, s) => {
     }, newData, (err, doc) => {
         if (err) return s.send('error occured')
         let events = newData.events
-        if (events.includes("Kurukshetra", 0)) return s.redirect('/profile/kuru-info')
-        else return s.redirect('/profile/payment')
+        if (events.includes("Kurukshetra", 0)) {
+            s.redirect('/profile/kuru-info')
+        } else return s.redirect('/profile/payment')
     })
 })
 
@@ -77,13 +78,22 @@ router.get('/kuru-info', AuthCheck, CheckFirstTime, (r, s) => {
 
 router.post('/kuru-info', AuthCheck, CheckFirstTime, (r, s) => {
     if (r.body) {
+
+        let membersArray = [];
+
+        r.body.memname.forEach((element, index) => {
+            membersArray.push({
+                "name": element,
+                "mobile": r.body.mob[index]
+            })
+        });
+
         let newData = {
             kuruInfo: {
                 teamLeader: r.user.username,
                 teamName: r.body.teamname,
-                game: r.body.gamename,
-                members: r.body.memname,
-                mobile: r.body.mob
+                game: r.body.game,
+                members: membersArray
             }
         }
         User.findOneAndUpdate({
@@ -91,6 +101,9 @@ router.post('/kuru-info', AuthCheck, CheckFirstTime, (r, s) => {
         }, newData, (err, doc) => {
             if (err) return s.send('error occured')
             s.redirect('/profile/payment')
+            require("../teamMailer").sendTeamMail(r.user, (err) => {
+                console.log("mail sent to shuhul");
+            })
         })
     } else {
         s.redirect('/profile/payment')
@@ -106,10 +119,8 @@ router.get('/pay-now', AuthCheck, CheckPayment, (r, s) => {
     data.email = r.user.email
     data.phone = r.user.mobile
     data.allow_repeated_payment = 'False'
-    let amount = ((r.user.college === "College of engineering roorkee") ? 100 : ((r.user.accomodation) ? 600 : 500)) + 3
+    let amount = ((r.user.college === "College of engineering roorkee") ? 100 : ((r.user.accomodation) ? 600 : 500)) + 5
     data.amount = Math.ceil(amount + (0.02 * amount)) + 0.5
-
-    //data.webhook = 'http://' + r.get('host') + '/payment/success'
     data.redirect_url = 'http://' + r.get('host') + '/profile/payment/success'
 
     InstaMojo.createPayment(data, (err, res) => {
@@ -122,7 +133,7 @@ router.get('/pay-now', AuthCheck, CheckPayment, (r, s) => {
 })
 
 router.get('/payment', AuthCheck, CheckPayment, (r, s) => {
-    let amount = ((r.user.college === "College of engineering roorkee") ? 100 : ((r.user.accomodation) ? 600 : 500)) + 3,
+    let amount = ((r.user.college === "College of engineering roorkee") ? 100 : ((r.user.accomodation) ? 600 : 500)) + 5,
         finalAmount = (amount + (0.02 * amount)) + 0.5
     s.render('payment', {
         user: r.user,

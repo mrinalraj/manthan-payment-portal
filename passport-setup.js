@@ -35,6 +35,7 @@ passport.use(
                     googleID: profile.id,
                     profileImage: image.replace('sz=50','sz=200'),
                     basicInfo: false,
+                    payment: false,
                     email: email
                 }).save().then((newUser) => {
                     done(null, newUser)

@@ -6,25 +6,27 @@ let UserSchema = new Schema({
     googleID: String,
     profileImage: String,
     basicInfo: Boolean,
-    college:String,
-    city : String,
-    branch : String,
-    year : String,
-    mobile : String,
-    email : String,
-    accomodation : Boolean,
-    events : [String],
-    payment : Boolean,
-    paymentId : String,
-    paymentReq : String,
-    kuruInfo : {
-        teamLeader : String,
-        teamName : String,
-        game : String,
-        members : [String],
-        mobile : [String]
+    college: String,
+    city: String,
+    branch: String,
+    year: String,
+    mobile: String,
+    email: String,
+    accomodation: Boolean,
+    events: [String],
+    payment: Boolean,
+    paymentId: String,
+    paymentReq: String,
+    kuruInfo: {
+        teamLeader: String,
+        teamName: String,
+        game: String,
+        members: [{
+            name: String,
+            mobile: String
+        }]
     },
-    qr : String
+    qr: String
 })
 
 const user = module.exports = mongoose.model('user', UserSchema)
