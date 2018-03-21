@@ -63,7 +63,7 @@
                     </div>
                     <div class="form-group col-md-6">
                         <label for="year">Year</label>
-                        <input type="number" name="year" class="form-control" id="year">
+                        <input type="text" name="year" class="form-control" id="year" pattern="[12345]{1}">
                         <small class="form-text text-muted">the current year of study</small>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                         <div class="input-group-prepend">
                             <div class="input-group-text">+91</div>
                         </div>
-                        <input type="tel" name="mobile" class="form-control" id="mobile" required>
+                        <input type="text" name="mobile" class="form-control" id="mobile" pattern="[6789][0-9]{9}" required>
                     </div>
                     <small class="form-text text-muted">Don't worry we won't spam you !</small>
                 </div>

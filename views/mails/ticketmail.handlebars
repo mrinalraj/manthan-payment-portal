@@ -1,0 +1,103 @@
+<link href="https://fonts.googleapis.com/css?family=Homemade+Apple|VT323" rel="stylesheet">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+    crossorigin="anonymous">
+
+<div class="container" style="margin-top:80px;">
+    <h2>Hello ,{{user.username}}</h2>
+    <p>Thank you for registering for Manthan 2018.</p>
+    <p>below is the ticket that you need to carry in order to participate in the event and also you must carry a valid identity
+        card with you.</p>
+
+    <div class="ticket">
+        <div class="pattern">
+            <div class="overlay">
+                <img height="170px" src="https://manthan18.herokuapp.com/logo/logo-white.png">
+            </div>
+        </div>
+        <div class="details">
+            <h5>ID : {{user.id}}</h5>
+            <h5>Name : {{user.username}}</h5>
+            <h5>College : {{user.college}}</h5>
+            <h5>Email : {{user.email}}</h5>
+            <h5>Mobile Number : {{user.mobile}}</h5>
+            <h5>Address : {{user.city}}</h5>
+            <h5>Accomodation : {{accomodation}}</h5>
+            {{#if user.kuruInfo.teamName}}
+            <h5>Team Name : {{user.kuruInfo.teamName}}</h5>
+            {{/if}}
+        </div>
+        <hr>
+        <div class="validity">
+            <div class="row">
+                <div class="col-sm-6">
+                    <img src="{{user.qr}}" height="100">
+                </div>
+                <div class="signature col-sm-6">
+                    <h5>VaibhavPant</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer" style="margin-bottom:50px;">
+        <small class="text-muted">for any querries please mail us at : me@mrinalraj.com</small>
+    </div>
+
+</div>
+
+<style>
+    .ticket {
+        width: 500px;
+        margin: 60px;
+        box-shadow: 0 1px 7px rgba(107, 107, 107, 0.4);
+    }
+
+    .ticket .pattern {
+        background: url('https://manthan18.herokuapp.com/ticket-pattern.jpg');
+        height: 250px;
+    }
+
+    .ticket .pattern .overlay {
+        position: absolute;
+        width: 500px;
+        height: 250px;
+        margin: 0;
+        padding: 0;
+        z-index: 11;
+        background: rgba(88, 96, 122, 0.85);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .ticket .details {
+        padding: 40px 30px;
+        font-family: 'VT323'
+    }
+
+    .ticket .details h5 {
+        font-size: 1.3rem;
+    }
+
+    .ticket .details h5.events {
+        margin-left: 20px !important;
+    }
+
+    hr {
+        margin: 0;
+    }
+
+    .ticket .validity {
+        padding: 30px 30px;
+    }
+
+    .signature {
+        font-family: 'Homemade Apple';
+        text-align: right;
+    }
+
+    .signature h5 {
+        line-height: 100px;
+        transform: rotate(-15deg);
+    }
+</style>

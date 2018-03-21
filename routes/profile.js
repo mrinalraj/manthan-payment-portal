@@ -14,10 +14,10 @@ const router = require('express').Router(),
             s.redirect('/profile/welcome')
         }
     },
-    CheckPayment = (r,s,n) =>{
-        if(r.user.payment){
+    CheckPayment = (r, s, n) => {
+        if (r.user.payment) {
             s.redirect('/profile')
-        }else{
+        } else {
             n()
         }
     },
@@ -28,11 +28,13 @@ const router = require('express').Router(),
 
 router.get('/', AuthCheck, CheckFirstTime, (r, s) => {
 
+    qr = r.user.payment ? imgUri.encode(Qr.imageSync(r.user.id, 'PNG'), 'PNG') : null;
+
     s.render('profile', {
         user: r.user,
         payment: r.user.payment ? 'Successful' : 'Pending',
-        qr: r.user.qr,
-        accomodation : r.user.accomodation ? "Yes" : "No"
+        qr: qr,
+        accomodation: r.user.accomodation ? "Yes" : "No"
     })
 })
 
@@ -81,7 +83,7 @@ router.post('/kuru-info', AuthCheck, CheckFirstTime, (r, s) => {
                 teamName: r.body.teamname,
                 game: r.body.gamename,
                 members: r.body.memname,
-                mobile : r.body.mob
+                mobile: r.body.mob
             }
         }
         User.findOneAndUpdate({
@@ -96,7 +98,7 @@ router.post('/kuru-info', AuthCheck, CheckFirstTime, (r, s) => {
 
 })
 
-router.get('/pay-now', AuthCheck, CheckPayment , (r, s) => {
+router.get('/pay-now', AuthCheck, CheckPayment, (r, s) => {
     let data = new InstaMojo.PaymentData()
     data.purpose = "Manthan 18 Ticket"
     data.currency = "INR"
@@ -104,7 +106,7 @@ router.get('/pay-now', AuthCheck, CheckPayment , (r, s) => {
     data.email = r.user.email
     data.phone = r.user.mobile
     data.allow_repeated_payment = 'False'
-    let amount = ((r.user.college === "College of engineering roorkee") ? 100 : ((r.user.accomodation) ? 500 : 400)) + 3
+    let amount = ((r.user.college === "College of engineering roorkee") ? 100 : ((r.user.accomodation) ? 600 : 500)) + 3
     data.amount = Math.ceil(amount + (0.02 * amount)) + 0.5
 
     //data.webhook = 'http://' + r.get('host') + '/payment/success'
@@ -119,8 +121,8 @@ router.get('/pay-now', AuthCheck, CheckPayment , (r, s) => {
 
 })
 
-router.get('/payment', AuthCheck ,CheckPayment , (r, s) => {
-    let amount = ((r.user.college === "College of engineering roorkee") ? 100 : ((r.user.accomodation) ? 500 : 400)) + 3,
+router.get('/payment', AuthCheck, CheckPayment, (r, s) => {
+    let amount = ((r.user.college === "College of engineering roorkee") ? 100 : ((r.user.accomodation) ? 600 : 500)) + 3,
         finalAmount = (amount + (0.02 * amount)) + 0.5
     s.render('payment', {
         user: r.user,
@@ -144,10 +146,14 @@ router.get('/payment/success', AuthCheck, (r, s) => {
             username: r.user.username
         }, newData, (err, doc) => {
             if (err) return s.send('<h1>Error completing payment,<br>please contact +917619734988</h1>')
-            s.render('payment-success', {
-                paymentId: newData.paymentId,
-                paymentReq: newData.paymentReq
+            require('../mailer').sendMail(r.user, err => {
+                if (err) return console.log(err)
+                s.render('payment-success', {
+                    paymentId: newData.paymentId,
+                    paymentReq: newData.paymentReq
+                })
             })
+
         })
 
     } else s.send(
@@ -156,5 +162,10 @@ router.get('/payment/success', AuthCheck, (r, s) => {
     )
 })
 
-
+router.get('/mail', (r, s) => {
+    require('../mailer').sendMail(r.user, err => {
+        if (err) return console.log(err)
+        s.send('mail sent')
+    })
+})
 module.exports = router

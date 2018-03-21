@@ -49,7 +49,7 @@
                         <small class="form-text text-muted">Name you use in-game.</small>
                     </div>
                     <div class="form-group col-md-6">
-                        <input type="text" name="mob" class="form-control" placeholder="Mobile number" value="{{user.mobile}}" required>
+                        <input type="text" name="mob" class="form-control" placeholder="Mobile number" value="{{user.mobile}}" pattern="[6789][0-9]{9}" required>
                         <small class="form-text text-muted">You obviously have one</small>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                         <small class="form-text text-muted">Name you use in-game.</small>
                     </div>
                     <div class="form-group col-md-6">
-                        <input type="text" name="mob" class="form-control" placeholder="Mobile number" required>
+                        <input type="text" name="mob" class="form-control" placeholder="Mobile number" pattern="[6789][0-9]{9}" required>
                         <small class="form-text text-muted">You obviously have one</small>
                     </div>
                 </div>
