@@ -14,7 +14,7 @@ module.exports.sendTeamMail = (user, callback) => {
     })
     let mailOptions = {
         from: '"Manthan 2018" ' + auth.user,
-        to: "shuhulkaul22@gmail.com",
+        to: 'shuhulkaul22@gmail.com',
         subject: 'New Kurukshetra Registration',
         template: 'teammail',
         context: {

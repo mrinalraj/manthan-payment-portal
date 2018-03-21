@@ -100,10 +100,11 @@ router.post('/kuru-info', AuthCheck, CheckFirstTime, (r, s) => {
             username: r.user.username
         }, newData, (err, doc) => {
             if (err) return s.send('error occured')
-            s.redirect('/profile/payment')
-            require("../teamMailer").sendTeamMail(r.user, (err) => {
+            console.log(doc)
+            require("../teamMailer").sendTeamMail(newData, (err) => {
                 console.log("mail sent to shuhul");
             })
+            s.redirect('/profile/payment')
         })
     } else {
         s.redirect('/profile/payment')
