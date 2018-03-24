@@ -1,7 +1,12 @@
 const mongoose = require('mongoose'),
-    Schema = mongoose.Schema
+    Schema = mongoose.Schema,
+    shortid = require('shortid')
 
 let UserSchema = new Schema({
+    _id : {
+        type : String,
+        'default' : shortid.generate
+    },
     username: String,
     googleID: String,
     profileImage: String,
