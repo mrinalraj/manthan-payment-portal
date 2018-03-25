@@ -1,32 +1,28 @@
 const router = require('express').Router(),
     AuthCheck = (r, s, n) => {
-        if (!r.user) {
-            s.redirect('/')
-        } //not logged
-        else {
-            n()
-        } //logged
+        if (!r.user) s.redirect('/')
+        else n()
     },
     CheckFirstTime = (r, s, n) => {
-        if (r.user.basicInfo == true) {
-            n()
-        } else {
-            s.redirect('/profile/welcome')
-        }
+        if (r.user.basicInfo == true) n()
+        else s.redirect('/profile/welcome')
+
     },
     CheckPayment = (r, s, n) => {
-        if (r.user.payment) {
-            s.redirect('/profile')
-        } else {
-            n()
-        }
+        if (r.user.payment) s.redirect('/profile')
+        else n()
+
+    },
+    CheckKuru = (r, s, n) => {
+        if (r.user.kuruInfo.teamLeader) n()
+        else s.redirect('/kuru-info')
     },
     User = require('../models/user-model'),
     InstaMojo = require('instamojo-nodejs'),
     Qr = require('qr-image'),
     imgUri = require('image-data-uri')
 
-router.get('/', AuthCheck, CheckFirstTime, (r, s) => {
+router.get('/', AuthCheck, CheckFirstTime, CheckKuru, (r, s) => {
 
     qr = r.user.payment ? imgUri.encode(Qr.imageSync(r.user.id, 'PNG'), 'PNG') : null;
 
