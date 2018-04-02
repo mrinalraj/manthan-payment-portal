@@ -14,8 +14,8 @@ const router = require('express').Router(),
 
     },
     CheckKuru = (r, s, n) => {
-        if (r.user.kuruInfo.teamLeader) n()
-        else s.redirect('/profile/kuru-info')
+        if (r.user.events.includes("Kurukshetra", 0) && !r.user.kuruInfo.teamLeader) s.redirect('/profile/kuru-info')
+        else n()
     },
     User = require('../models/user-model'),
     InstaMojo = require('instamojo-nodejs'),
