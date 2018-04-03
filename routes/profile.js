@@ -116,7 +116,7 @@ router.get('/pay-now', AuthCheck, CheckPayment, (r, s) => {
     data.email = r.user.email
     data.phone = r.user.mobile
     data.allow_repeated_payment = 'False'
-    let amount = ((r.user.college === "College of engineering roorkee") ? 100 : ((r.user.accomodation) ? 600 : 500)) + 5
+    let amount = ((r.user.college === "College of engineering roorkee") ? 100 : ((r.user.accomodation) ? 600 : 500))
     data.amount = Math.ceil(amount + (0.02 * amount)) + 0.5
     data.redirect_url = 'http://' + r.get('host') + '/profile/payment/success'
 
@@ -130,7 +130,7 @@ router.get('/pay-now', AuthCheck, CheckPayment, (r, s) => {
 })
 
 router.get('/payment', AuthCheck, CheckPayment, (r, s) => {
-    let amount = ((r.user.college === "College of engineering roorkee") ? 100 : ((r.user.accomodation) ? 600 : 500)) + 5,
+    let amount = ((r.user.college === "College of engineering roorkee") ? 100 : ((r.user.accomodation) ? 600 : 500)),
         finalAmount = (amount + (0.02 * amount)) + 0.5
     s.render('payment', {
         user: r.user,
